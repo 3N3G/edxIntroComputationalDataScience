@@ -1,0 +1,25 @@
+# Enter your code for the Greedy Cow Transport here 
+def greedy_cow_transport(cows, limit=10):
+    def greedy(items, maxCost, keyFunction):
+        itemsCopy = sorted(items, key = keyFunction, reverse = True)
+        result = []
+        totalValue = 0.0
+        totalCost = 0.0
+        
+        for i in range(len(itemsCopy)):
+            if (totalCost+items[itemsCopy[i]]) <= maxCost:
+                result.append(itemsCopy[i])
+                totalCost += items[itemsCopy[i]]
+                totalValue += items[itemsCopy[i]]
+        return (result, totalValue)
+        
+    cowsGone = 0
+    cowsCopy = cows.copy()
+    tripList = []
+    while (cowsGone < len(cows)):
+        (result, totalValue) = greedy(cowsCopy, limit, lambda x: cowsCopy[x])
+        cowsGone += len(result)
+        tripList.append(result)
+        for i in result:
+            cowsCopy.pop(i)
+    return tripList
